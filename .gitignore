@@ -1,0 +1,13 @@
+#compiled#
+*.dll
+*.exe
+*.o
+
+#packages#
+*.7z
+*.gz
+*.rar
+*.tar
+*.zip
+
+*.log
