@@ -10,4 +10,5 @@
 *.tar
 *.zip
 
+#all logs#
 *.log
