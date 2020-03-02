@@ -4,7 +4,6 @@
 
 int main()
 {
-
 	int arr[50][50];
 	
 	srand (time(NULL));
@@ -19,13 +18,16 @@ int main()
 			
 			if ((rand() % 10 + 1) > 9)
 			{
+
 				arr[i][j] = 1;
+
 			}	
 			else
 			{
+
 				arr[i][j] = 0;
+
 			}
-					
 			
 			std::cout << arr[i][j];	
 		}

@@ -5,6 +5,7 @@
 class Species
 {
 	public:
+
 	int size;
 	int strength;
 	
@@ -19,17 +20,14 @@ class Species
 
 	void printTraits()
 	{
-
 	std::cout << size << ' ';
 
 	std::cout << strength << ' ';
-
 	}
 };
 
 int main()
 {
-
 	Species species1;
 	
 	species1.initiateSpecies();
@@ -39,6 +37,5 @@ int main()
 	species1.printTraits();
 
 	return 0;
-
 }
 
