@@ -20,9 +20,9 @@ class Species
 
 	void printTraits()
 	{
-	std::cout << size << ' ';
+		std::cout << size << ' ';
 
-	std::cout << strength << ' ';
+		std::cout << strength << ' ';
 	}
 };
 
