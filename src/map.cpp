@@ -1,30 +1,32 @@
 #include <iostream>
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
+#include "species.h"
 
 int main()
 {
-	int arr[50][50];
+	int map[50][50];
 	
 	srand (time(NULL));
 
-	int width = 50, height = 50;
-
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < (sqrt(sizeof(map)/4)); i++)
 	{		
-		for (int j = 0; j < height; j++)
+		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
 		{			
-			if ((rand() % 10 + 1) > 9)
+			if ((rand() % 1000 + 1) > 990)
 			{
-				arr[i][j] = 1;
+				map[i][j] = 1;
 			}	
 			else
 			{
-				arr[i][j] = 0;
+				map[i][j] = 0;
 			}
 			
-			std::cout << arr[i][j];	
+			std::cout << map[i][j] << " ";	
 		}
+
+		std::cout << "\n";
 
 	}
 

@@ -26,16 +26,4 @@ class Species
 	}
 };
 
-int main()
-{
-	Species species1;
-	
-	species1.initiateSpecies();
-
-	species1.printTraits();
-
-	species1.printTraits();
-
-	return 0;
-}
 
