@@ -5,25 +5,25 @@
 class Species
 {
 	public:
+		int size;
+		
+		int strength;
+		
+		void initiateSpecies()
+		{
+				srand (time(NULL));
 
-	int size;
-	int strength;
-	
-	void initiateSpecies()
-	{
-        	srand (time(NULL));
+				size = rand() % 10 + 1;
 
-	        size = rand() % 10 + 1;
+				strength = 10 - size;
+		}
 
-			strength = 10 - size;
-	}
+		void printTraits()
+		{
+			std::cout << size << ' ';
 
-	void printTraits()
-	{
-		std::cout << size << ' ';
-
-		std::cout << strength << ' ';
-	}
+			std::cout << strength << ' ';
+		}
 };
 
 
