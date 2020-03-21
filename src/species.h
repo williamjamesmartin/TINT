@@ -15,7 +15,7 @@ class Species
 
 	        size = rand() % 10 + 1;
 
-		strength = 10 - size;
+			strength = 10 - size;
 	}
 
 	void printTraits()
