@@ -1,13 +1,14 @@
-#ifndef SPECIES_H
-#define SPECIES_H
+#include <stdlib.h>
+#include <time.h>
+#include <iostream>
 
 class Species
 {
 	public:
-		float size;
-		float visibility;
-		float strength;
-
+		int size;
+		
+		int strength;
+		
 		void initiateSpecies()
 		{
 				srand (time(NULL));
@@ -15,8 +16,6 @@ class Species
 				size = rand() % 10 + 1;
 
 				strength = 10 - size;
-
-				visibility = rand() % 3 + 1;
 		}
 
 		void printTraits()
@@ -24,10 +23,7 @@ class Species
 			std::cout << size << ' ';
 
 			std::cout << strength << ' ';
-			
-			std::cout << visibility << '\n';
 		}
 };
 
-#endif
 

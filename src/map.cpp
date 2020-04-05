@@ -6,15 +6,18 @@
 
 int main()
 {
-	int map[50][50];
-	
+	int map[20][20];
+	Species one;
+
+	one.initiateSpecies();
+
 	srand (time(NULL));
 
 	for (int i = 0; i < (sqrt(sizeof(map)/4)); i++)
 	{		
 		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
 		{			
-			if ((rand() % 1000 + 1) > 990)
+			if ((rand() % 100 + 1) > 99)
 			{
 				map[i][j] = 1;
 			}	
@@ -27,8 +30,9 @@ int main()
 		}
 
 		std::cout << "\n";
-
 	}
+
+	one.printTraits();
 
 	return 0;
 }
