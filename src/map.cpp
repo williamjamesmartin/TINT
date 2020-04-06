@@ -2,15 +2,17 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
+#include <vector>
 #include "species.h"
 
 int main()
 {
-	int map[20][20];
+	int map[50][50];
+
 	Species one;
 
-	one.initiateSpecies();
-
+	Species two;
+	
 	srand (time(NULL));
 
 	for (int i = 0; i < (sqrt(sizeof(map)/4)); i++)
@@ -26,10 +28,10 @@ int main()
 				map[i][j] = 0;
 			}
 			
-			std::cout << map[i][j] << " ";	
+			std::cout << map[i][j] << ' ';	
 		}
 
-		std::cout << "\n";
+		std::cout << '\n';
 	}
 
 	one.printTraits();

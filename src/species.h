@@ -1,16 +1,18 @@
-#ifndef SPECIES_H
-#define SPECIES_H
+#ifndef SPECIES_H_
+#define SPECIES_H_
 
 class Species
 {
 	public:
-		float size;
-		float visibility;
-		float strength;
+		int size;
+		int visibility;
+		int strength;
 
 		void initiateSpecies()
 		{
 				srand (time(NULL));
+
+				speciesLocator
 
 				size = rand() % 10 + 1;
 
@@ -25,9 +27,16 @@ class Species
 
 			std::cout << strength << ' ';
 			
-			std::cout << visibility << '\n';
+			std::cout << visibility << ' ';
+
+			std::cout << speciesNum << '\n';
 		}
 };
 
-#endif
+class speciesLocator
+{
+	public:
+		std::vector<int> list;
+};
 
+#endif
