@@ -4,39 +4,44 @@
 class Species
 {
 	public:
-		int size;
-		int visibility;
-		int strength;
+		std::vector<std::vector<float>> list;
+		double size;
+		double speed;
+		double vision;
 
-		void initiateSpecies()
+		void initiateSpecies(int x)
 		{
-				srand (time(NULL));
+			srand (time(NULL));
 
-				speciesLocator
+			for (int i = 0; i < x; i++)
+			{
+				std::vector<float> temp;
 
-				size = rand() % 10 + 1;
+				size = abs(rand());
 
-				strength = 10 - size;
+				speed = 1 - size;
 
-				visibility = rand() % 3 + 1;
-		}
+				vision = rand() * 3;
 
-		void printTraits()
-		{
-			std::cout << size << ' ';
+				temp.push_back(i + 2);
 
-			std::cout << strength << ' ';
+				temp.push_back(size);
+
+				temp.push_back(speed);
+
+				temp.push_back(vision);
+
+				list.push_back(temp);
+			}
 			
-			std::cout << visibility << ' ';
-
-			std::cout << speciesNum << '\n';
+			for (int i = 0; i < list.size(); i++)
+			{
+				for (int j = 0; j < list[i].size(); j++)
+				{
+					cout << list[i][j];
+				}
+			}
 		}
-};
-
-class speciesLocator
-{
-	public:
-		std::vector<int> list;
 };
 
 #endif
