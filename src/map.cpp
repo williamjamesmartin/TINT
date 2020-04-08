@@ -27,7 +27,7 @@ int main()
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 7 && applier <= 9)
+			else if (applier >= 7 && applier < 9)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
