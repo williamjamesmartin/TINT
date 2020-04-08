@@ -17,11 +17,11 @@ class Species
 			{
 				std::vector<float> temp;
 
-				size = abs(rand());
+				size = ((double) rand() / (RAND_MAX)) ;
 
 				speed = 1 - size;
 
-				vision = rand() * 3;
+				vision = (((double) rand() / (RAND_MAX))) * 3;
 
 				temp.push_back(i + 2);
 
@@ -38,8 +38,10 @@ class Species
 			{
 				for (int j = 0; j < list[i].size(); j++)
 				{
-					cout << list[i][j];
+					std::cout << list[i][j] << '\n';
 				}
+				
+				std::cout << '\n';
 			}
 		}
 };
