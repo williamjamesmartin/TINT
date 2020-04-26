@@ -93,6 +93,8 @@ void nextEpoch(Species x)		//applies the takeStep function to every species on t
 		std::cout << '\n';
 	}
 
+	std::cout << '\n';
+
 }
 
 int main()
@@ -111,13 +113,13 @@ int main()
 		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
 			//initializes a 50 x 50 square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
 		{	
-			applier = rand() % 10 + 1;					
+			applier = rand() % 100 + 1;					
 			
-			if (applier >= 9)
+			if (applier >= 95)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 7 && applier < 9)
+			else if (applier >= 70 && applier < 90)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
@@ -141,6 +143,12 @@ int main()
 
 	std::cout << '\n';
 	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+
 
 	return 0;
 }
