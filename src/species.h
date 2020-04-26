@@ -20,11 +20,11 @@ class Species
 			{
 				std::vector<float> temp;
 
-				size = ((double) rand() / (RAND_MAX)) * 0.5 ;
+				size = ((double) rand() / (RAND_MAX)) * 5;
 
 				speed = ((double) rand() / (RAND_MAX));
 
-				vision = 0.5 - size;
+				vision = 5 - size;
 
 				hunger = 10;
 

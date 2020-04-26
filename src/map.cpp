@@ -49,11 +49,11 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 	}
 
 	hunger:
-		if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
+		if(x.list[id-2][4] == initialHunger)	//in the case of running through the whole loop and finding no food
 		{
-			x.list[(double)(id-2)][4]--;
+			x.list[id-2][4]--;
 
-			if(x.list[(double)(id-2)][4] == 0)			//dies of hunger
+			if(x.list[id-2][4] == 0)			//dies of hunger
 			{
 				map[i][j] = 0;
 			}
