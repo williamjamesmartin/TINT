@@ -14,6 +14,8 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 
 	double initialHunger = x.list[id-2][4];			//hunger before moving
 
+	std::cout << initialHunger << std::endl << std::endl;
+
 	for(int index = i - (int)ceil(v); index < i + (int)ceil(v); index++)
 	{
 		for(int ind = j - (int)ceil(v) - (int)ceil(v); ind < j + (int)ceil(v); ind++)
@@ -30,7 +32,7 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 			{
 				map[index][ind] = id;
 				map[i][j] = 0;
-				x.list[(double)(id-2)][4];
+				x.list[(double)(id-2)][4]++;
 				goto hunger;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
 			}
 			else if(map[index][ind] >= 2)			//Special encounter. Better size wins out
@@ -114,12 +116,12 @@ int main()
 			//initializes a 50 x 50 square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
 		{	
 			applier = rand() % 100 + 1;					
-			
-			if (applier >= 95)
+
+			if (applier >= 97)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 70 && applier < 90)
+			else if (applier >= 90 && applier < 97)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
@@ -142,13 +144,13 @@ int main()
 	}
 
 	std::cout << '\n';
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
 
+	for (int i = 0; i < 4; i++)
+	{
+		nextEpoch(one);
+
+		one.printSpecies();
+	}
 
 	return 0;
 }
