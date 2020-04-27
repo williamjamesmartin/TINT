@@ -30,8 +30,8 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 			{
 				map[index][ind] = id;
 				map[i][j] = 0;
-				x.list[(double)(id-2)][4];
-				goto hunger;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
+				x.list[(double)(id-2)][4]++;
+				goto loopEnd;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
 			}
 			else if(map[index][ind] >= 2)			//Special encounter. Better size wins out
 			{
@@ -40,22 +40,24 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 					map[index][ind] = id;			//kills the smaller species
 					map[i][j] = 0;
 					x.list[(double)(id-2)][4]++;
-					goto hunger;
+					goto loopEnd;
 				}
 			}
 		}
 	}
 
-	hunger:
-		if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
-		{
-			x.list[(double)(id-2)][4]--;
+	if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
+	{
+		x.list[(double)(id-2)][4]--;
 
-			if(x.list[(double)(id-2)][4] == 0)			//dies of hunger
-			{
-				map[i][j] = 0;
-			}
+		if(x.list[(double)(id-2)][4] == 0)		//dies of hunger
+		{
+			map[i][j] = 0;
 		}
+	}
+
+	loopEnd: ;									//does nothing, ends loop
+		
 }	
 
 void nextEpoch(Species x)		//applies the takeStep function to every species on the map
@@ -141,6 +143,24 @@ int main()
 
 	std::cout << '\n';
 	nextEpoch(one);
+	std::cout << one.list[2][4] << '\n';
+	std::cout << one.list[3][4] << '\n';
+	std::cout << one.list[4][4] << '\n';
+	std::cout << '\n';
+	nextEpoch(one);
+	std::cout << one.list[2][4] << '\n';
+	std::cout << one.list[3][4] << '\n';
+	std::cout << one.list[4][4] << '\n';
+	std::cout << '\n';
+	nextEpoch(one);
+	std::cout << one.list[2][4] << '\n';
+	std::cout << one.list[3][4] << '\n';
+	std::cout << one.list[4][4] << '\n';
+	std::cout << '\n';
+	nextEpoch(one);
+	std::cout << one.list[2][4] << '\n';
+	std::cout << one.list[3][4] << '\n';
+	std::cout << one.list[4][4] << '\n';
 
 	return 0;
 }
