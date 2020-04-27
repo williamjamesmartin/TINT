@@ -15,16 +15,16 @@ class Species
 			srand (time(NULL));
 			
 			for (int i = 0; i < x; i++)
-				//initiates a species by giving it random traits such as size, speed and vision where size and speed are inversely proportional
+				//initiates a species by giving it random traits such as size, speed and vision where size and vision are inversely proportional
 
 			{
 				std::vector<float> temp;
 
-				size = ((double) rand() / (RAND_MAX)) ;
+				size = ((double) rand() / (RAND_MAX)) * 5;
 
-				speed = 1 - size;
+				speed = ((double) rand() / (RAND_MAX));
 
-				vision = (((double) rand() / (RAND_MAX))) * 2;
+				vision = 5 - size;
 
 				hunger = 10;
 
@@ -44,7 +44,19 @@ class Species
 			for (int i = 0; i < list.size(); i++)
 			{
 				for (int j = 0; j < list[i].size(); j++)
-					//adds species id to the vector of vectors "list"
+				{
+					std::cout << list[i][j] << '\n';
+				}
+				
+				std::cout << '\n';
+			}
+		}
+
+		void printSpecies()
+		{
+			for (int i = 0; i < list.size(); i++)
+			{
+				for (int j = 0; j < list[i].size(); j++)
 				{
 					std::cout << list[i][j] << '\n';
 				}

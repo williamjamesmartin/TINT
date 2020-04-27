@@ -14,6 +14,8 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 
 	double initialHunger = x.list[id-2][4];			//hunger before moving
 
+	std::cout << initialHunger << std::endl << std::endl;
+
 	for(int index = i - (int)ceil(v); index < i + (int)ceil(v); index++)
 	{
 		for(int ind = j - (int)ceil(v) - (int)ceil(v); ind < j + (int)ceil(v); ind++)
@@ -31,7 +33,11 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 				map[index][ind] = id;
 				map[i][j] = 0;
 				x.list[(double)(id-2)][4]++;
+<<<<<<< HEAD
 				goto loopEnd;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
+=======
+				goto hunger;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
+>>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
 			}
 			else if(map[index][ind] >= 2)			//Special encounter. Better size wins out
 			{
@@ -46,6 +52,7 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 		}
 	}
 
+<<<<<<< HEAD
 	if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
 	{
 		x.list[(double)(id-2)][4]--;
@@ -53,6 +60,17 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 		if(x.list[(double)(id-2)][4] == 0)		//dies of hunger
 		{
 			map[i][j] = 0;
+=======
+	hunger:
+		if(x.list[id-2][4] == initialHunger)	//in the case of running through the whole loop and finding no food
+		{
+			x.list[id-2][4]--;
+
+			if(x.list[id-2][4] == 0)			//dies of hunger
+			{
+				map[i][j] = 0;
+			}
+>>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
 		}
 	}
 
@@ -95,6 +113,8 @@ void nextEpoch(Species x)		//applies the takeStep function to every species on t
 		std::cout << '\n';
 	}
 
+	std::cout << '\n';
+
 }
 
 int main()
@@ -113,13 +133,13 @@ int main()
 		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
 			//initializes a 50 x 50 square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
 		{	
-			applier = rand() % 10 + 1;					
-			
-			if (applier >= 9)
+			applier = rand() % 100 + 1;					
+
+			if (applier >= 97)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 7 && applier < 9)
+			else if (applier >= 90 && applier < 97)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
@@ -142,6 +162,7 @@ int main()
 	}
 
 	std::cout << '\n';
+<<<<<<< HEAD
 	nextEpoch(one);
 	std::cout << one.list[2][4] << '\n';
 	std::cout << one.list[3][4] << '\n';
@@ -161,6 +182,15 @@ int main()
 	std::cout << one.list[2][4] << '\n';
 	std::cout << one.list[3][4] << '\n';
 	std::cout << one.list[4][4] << '\n';
+=======
+
+	for (int i = 0; i < 4; i++)
+	{
+		nextEpoch(one);
+
+		one.printSpecies();
+	}
+>>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
 
 	return 0;
 }
