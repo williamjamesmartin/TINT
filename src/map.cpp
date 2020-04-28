@@ -11,19 +11,12 @@ int speciesCount = 2;	//had to make this global to iniate species in the takeSte
 
 bool checkMate(Species& x, int a, int b)		//returns True or False depending on whether or not species b is a potential mate
 {
-	int match = 0;
 	int hungera = x.list[a-2][4];
+
 	int hungerb = x.list[b-2][4];
 
-	for(int i; 1 <= i < 3; i++)	//tests for similarities in speed, size and vision
-	{
-		if(abs(x.list[a-2][i] - x.list[b-2][i]) < x.list[a-2][i]*0.05)		//within 10% of the original value
-		{
-			match++;
-		}
-	}
-	if(match == 3 && hungera > 10 && hungerb > 10)
-	{
+	if(abs(x.list[a-2][1] - x.list[b-2][1]) < x.list[a-2][1]*0.5 && hungera > 10 && hungerb > 10)		//within 10% of the original value
+    {
 		return true;
 	}
 	else
@@ -159,11 +152,11 @@ int main()
 		{	
 			applier = rand() % 100 + 1;					
 
-			if (applier >= 97)
+			if (applier >= 90)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 90 && applier < 97)
+			else if (applier >= 88 && applier < 90)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
@@ -186,11 +179,13 @@ int main()
 	}
 
 	std::cout << '\n';
-	
-	std::cout << one.list[3][1] << '\n';
-	std::cout << one.list[3][2] << '\n';
-	std::cout << one.list[3][3] << '\n';
 
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
+	nextEpoch(one);
 	nextEpoch(one);
 
 	return 0;

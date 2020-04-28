@@ -9,6 +9,7 @@ class Species
 		double speed;
 		double vision;
 		double hunger;
+		double posTest;
 
 		void initiateSpecies(int x)
 		{
@@ -22,7 +23,7 @@ class Species
 
 				size = ((double) rand() / (RAND_MAX)) * 5;
 
-				speed = ((double) rand() / (RAND_MAX));
+				speed = ((double) rand() / (RAND_MAX)); // Unused variable, for further development
 
 				vision = 5 - size;
 
@@ -56,25 +57,52 @@ class Species
 		{
 			std::vector<float> temp;
 
-			size = (list[a][1] + list[b][1])/2;
+			posTest = rand() % 1 + (-1);
+			
+			if(posTest > 0)
+			{
+				size = ((list[a][1] + list[b][1])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
 
-			speed = (list[a][2] + list[b][2])/2;
+				speed = ((list[a][2] + list[b][2])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
 
-			vision = (list[a][3] + list[b][3])/2;
+				vision = ((list[a][3] + list[b][3])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
 
-			hunger = 10;
+				hunger = 10;
 
-			temp.push_back(count + 1);
+				temp.push_back(count + 1);
 
-			temp.push_back(size);
+				temp.push_back(size);
 
-			temp.push_back(speed);
+				temp.push_back(speed);
 
-			temp.push_back(vision);
+				temp.push_back(vision);
 
-			temp.push_back(hunger);
+				temp.push_back(hunger);
 
-			list.push_back(temp);
+				list.push_back(temp);
+			}
+			else
+			{
+				size = ((list[a][1] + list[b][1])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+
+				speed = ((list[a][2] + list[b][2])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+
+				vision = ((list[a][3] + list[b][3])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+
+				hunger = 10;
+
+				temp.push_back(count + 1);
+
+				temp.push_back(size);
+
+				temp.push_back(speed);
+
+				temp.push_back(vision);
+
+				temp.push_back(hunger);
+
+				list.push_back(temp);
+			}
 		}
 
 		void printSpecies()
