@@ -6,9 +6,26 @@
 #include "species.h"
 #include <algorithm>
 
-int map[20][20];
+int map[30][30];
+int speciesCount = 2;	//had to make this global to iniate species in the takeStep function
 
-void takeStep(Species x, int id, int i, int j)		//determines actions based on vision in front of an individual
+bool checkMate(Species& x, int a, int b)		//returns True or False depending on whether or not species b is a potential mate
+{
+	int hungera = x.list[a-2][4];
+
+	int hungerb = x.list[b-2][4];
+
+	if(abs(x.list[a-2][1] - x.list[b-2][1]) < x.list[a-2][1]*0.1 && hungera > 10 && hungerb > 10)		//within 10% of the original value
+    {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void takeStep(Species& x, int id, int i, int j)		//determines actions based on vision in front of an individual
 {
 	double v = x.list[id-2][3];						//vision stat
 
@@ -30,35 +47,63 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 			{
 				map[index][ind] = id;
 				map[i][j] = 0;
-				x.list[(double)(id-2)][4];
-				goto hunger;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
+				x.incHunger(id-2);
+				goto loopEnd;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
 			}
-			else if(map[index][ind] >= 2)			//Special encounter. Better size wins out
+			else if(map[index][ind] >= 2)			//Special encounter
 			{
-				if(x.list[id-2][1] > x.list[(map[index][ind])-2][1])
+				if(checkMate(x,id,map[index][ind]))
+				{
+					speciesCount++;
+					x.initOffspring(speciesCount, id-2, map[index][ind]-2);
+					x.decHunger(id-2);
+					
+					for(int spawn = i - (int)ceil(v); spawn < i + (int)ceil(v); spawn++)
+					{
+						for(int egg = j - (int)ceil(v) - (int)ceil(v); egg < j + (int)ceil(v); egg++)
+						{
+							if(spawn == i && egg == j) 		//if map[i][j], pass
+							{
+								continue;
+							}
+							else if(spawn < 0 || egg < 0 || spawn > (sqrt(sizeof(map)/4) - 1) || egg > (sqrt(sizeof(map)/4) - 1)) 		//check bounds for when map[i][j] is in a corner or edge, avoids segmentation error
+							{
+								continue;
+							}
+							else if(map[spawn][egg] == 0)
+							{
+								map[spawn][egg] = speciesCount;	//gives birth to offspring in nearest empty space
+								goto loopEnd;
+							}
+						}
+					}
+				}
+				else if(x.list[id-2][1] > x.list[(map[index][ind])-2][1])	//Better size wins out
 				{
 					map[index][ind] = id;			//kills the smaller species
 					map[i][j] = 0;
-					x.list[(double)(id-2)][4]++;
-					goto hunger;
+					x.incHunger(id-2);
+					goto loopEnd;
 				}
 			}
 		}
 	}
 
-	hunger:
-		if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
-		{
-			x.list[(double)(id-2)][4]--;
+	if(x.list[id-2][4] == initialHunger)	//in the case of running through the whole loop and finding no food
+	{
+		x.decHunger(id-2);
 
-			if(x.list[(double)(id-2)][4] == 0)			//dies of hunger
-			{
-				map[i][j] = 0;
-			}
+		if(x.list[id-2][4] == 0)			//dies of hunger
+		{
+			map[i][j] = 0;
 		}
+	}
+
+	loopEnd: ;									//does nothing, ends loop
+		
 }	
 
-void nextEpoch(Species x)		//applies the takeStep function to every species on the map
+void nextEpoch(Species& x)		//applies the takeStep function to every species on the map
 {
 	std::vector<int> check;		//vector containing the ids of species that have taken a step. Array size should correspond to speciesMax
 
@@ -101,7 +146,6 @@ int main()
 {
 	int speciesMax = 20;
 	int applier;
-	int speciesCount = 2;
 	Species one;
 
 	one.initiateSpecies(speciesMax);
@@ -114,12 +158,12 @@ int main()
 			//initializes a 50 x 50 square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
 		{	
 			applier = rand() % 100 + 1;					
-			
-			if (applier >= 95)
+
+			if (applier >= 90)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 70 && applier < 90)
+			else if (applier >= 88 && applier < 90)
 			{
 				if (speciesCount < (2 + speciesMax))
 				{
@@ -142,13 +186,8 @@ int main()
 	}
 
 	std::cout << '\n';
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
 
-
+	nextEpoch(one);
+	
 	return 0;
 }
