@@ -6,15 +6,37 @@
 #include "species.h"
 #include <algorithm>
 
-int map[20][20];
+int map[30][30];
+int speciesCount = 2;	//had to make this global to iniate species in the takeStep function
 
-void takeStep(Species x, int id, int i, int j)		//determines actions based on vision in front of an individual
+bool checkMate(Species& x, int a, int b)		//returns True or False depending on whether or not species b is a potential mate
+{
+	int match = 0;
+	int hungera = x.list[a-2][4];
+	int hungerb = x.list[b-2][4];
+
+	for(int i; 1 <= i < 3; i++)	//tests for similarities in speed, size and vision
+	{
+		if(abs(x.list[a-2][i] - x.list[b-2][i]) < x.list[a-2][i]*0.05)		//within 10% of the original value
+		{
+			match++;
+		}
+	}
+	if(match == 3 && hungera > 10 && hungerb > 10)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void takeStep(Species& x, int id, int i, int j)		//determines actions based on vision in front of an individual
 {
 	double v = x.list[id-2][3];						//vision stat
 
 	double initialHunger = x.list[id-2][4];			//hunger before moving
-
-	std::cout << initialHunger << std::endl << std::endl;
 
 	for(int index = i - (int)ceil(v); index < i + (int)ceil(v); index++)
 	{
@@ -32,45 +54,48 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 			{
 				map[index][ind] = id;
 				map[i][j] = 0;
-				x.list[(double)(id-2)][4]++;
-<<<<<<< HEAD
+				x.incHunger(id-2);
 				goto loopEnd;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
-=======
-				goto hunger;						//using a break statement in this case would only break out of the innermost loop. goto is the most efficient
->>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
 			}
-			else if(map[index][ind] >= 2)			//Special encounter. Better size wins out
+			else if(map[index][ind] >= 2)			//Special encounter
 			{
-				if(x.list[id-2][1] > x.list[(map[index][ind])-2][1])
+				if(checkMate(x,id,map[index][ind]))
+				{
+					x.initOffspring(speciesCount, id-2, map[index][ind]-2);
+					x.decHunger(id-2);
+					speciesCount++;
+					
+					for(int index = i - (int)ceil(v); index < i + (int)ceil(v); index++)
+					{
+						for(int ind = j - (int)ceil(v) - (int)ceil(v); ind < j + (int)ceil(v); ind++)
+						{
+							if(map[i][j] == 0)
+							{
+								map[i][j] = speciesCount;	//gives birth to offspring in nearest empty space
+							}
+						}
+					}
+					
+					goto loopEnd;
+				}
+				else if(x.list[id-2][1] > x.list[(map[index][ind])-2][1])	//Better size wins out
 				{
 					map[index][ind] = id;			//kills the smaller species
 					map[i][j] = 0;
-					x.list[(double)(id-2)][4]++;
+					x.incHunger(id-2);
 					goto loopEnd;
 				}
 			}
 		}
 	}
 
-<<<<<<< HEAD
-	if(x.list[(double)(id-2)][4] == initialHunger)	//in the case of running through the whole loop and finding no food
+	if(x.list[id-2][4] == initialHunger)	//in the case of running through the whole loop and finding no food
 	{
-		x.list[(double)(id-2)][4]--;
+		x.decHunger(id-2);
 
-		if(x.list[(double)(id-2)][4] == 0)		//dies of hunger
+		if(x.list[id-2][4] == 0)			//dies of hunger
 		{
 			map[i][j] = 0;
-=======
-	hunger:
-		if(x.list[id-2][4] == initialHunger)	//in the case of running through the whole loop and finding no food
-		{
-			x.list[id-2][4]--;
-
-			if(x.list[id-2][4] == 0)			//dies of hunger
-			{
-				map[i][j] = 0;
-			}
->>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
 		}
 	}
 
@@ -78,7 +103,7 @@ void takeStep(Species x, int id, int i, int j)		//determines actions based on vi
 		
 }	
 
-void nextEpoch(Species x)		//applies the takeStep function to every species on the map
+void nextEpoch(Species& x)		//applies the takeStep function to every species on the map
 {
 	std::vector<int> check;		//vector containing the ids of species that have taken a step. Array size should correspond to speciesMax
 
@@ -121,7 +146,6 @@ int main()
 {
 	int speciesMax = 20;
 	int applier;
-	int speciesCount = 2;
 	Species one;
 
 	one.initiateSpecies(speciesMax);
@@ -162,35 +186,12 @@ int main()
 	}
 
 	std::cout << '\n';
-<<<<<<< HEAD
-	nextEpoch(one);
-	std::cout << one.list[2][4] << '\n';
-	std::cout << one.list[3][4] << '\n';
-	std::cout << one.list[4][4] << '\n';
-	std::cout << '\n';
-	nextEpoch(one);
-	std::cout << one.list[2][4] << '\n';
-	std::cout << one.list[3][4] << '\n';
-	std::cout << one.list[4][4] << '\n';
-	std::cout << '\n';
-	nextEpoch(one);
-	std::cout << one.list[2][4] << '\n';
-	std::cout << one.list[3][4] << '\n';
-	std::cout << one.list[4][4] << '\n';
-	std::cout << '\n';
-	nextEpoch(one);
-	std::cout << one.list[2][4] << '\n';
-	std::cout << one.list[3][4] << '\n';
-	std::cout << one.list[4][4] << '\n';
-=======
+	
+	std::cout << one.list[3][1] << '\n';
+	std::cout << one.list[3][2] << '\n';
+	std::cout << one.list[3][3] << '\n';
 
-	for (int i = 0; i < 4; i++)
-	{
-		nextEpoch(one);
-
-		one.printSpecies();
-	}
->>>>>>> 252012aa038521339c8ebb068a1b9dc04c94470e
+	nextEpoch(one);
 
 	return 0;
 }
