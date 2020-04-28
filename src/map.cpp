@@ -15,7 +15,7 @@ bool checkMate(Species& x, int a, int b)		//returns True or False depending on w
 
 	int hungerb = x.list[b-2][4];
 
-	if(abs(x.list[a-2][1] - x.list[b-2][1]) < x.list[a-2][1]*0.5 && hungera > 10 && hungerb > 10)		//within 10% of the original value
+	if(abs(x.list[a-2][1] - x.list[b-2][1]) < x.list[a-2][1]*0.1 && hungera > 10 && hungerb > 10)		//within 10% of the original value
     {
 		return true;
 	}
@@ -54,22 +54,29 @@ void takeStep(Species& x, int id, int i, int j)		//determines actions based on v
 			{
 				if(checkMate(x,id,map[index][ind]))
 				{
+					speciesCount++;
 					x.initOffspring(speciesCount, id-2, map[index][ind]-2);
 					x.decHunger(id-2);
-					speciesCount++;
 					
-					for(int index = i - (int)ceil(v); index < i + (int)ceil(v); index++)
+					for(int spawn = i - (int)ceil(v); spawn < i + (int)ceil(v); spawn++)
 					{
-						for(int ind = j - (int)ceil(v) - (int)ceil(v); ind < j + (int)ceil(v); ind++)
+						for(int egg = j - (int)ceil(v) - (int)ceil(v); egg < j + (int)ceil(v); egg++)
 						{
-							if(map[i][j] == 0)
+							if(spawn == i && egg == j) 		//if map[i][j], pass
 							{
-								map[i][j] = speciesCount;	//gives birth to offspring in nearest empty space
+								continue;
+							}
+							else if(spawn < 0 || egg < 0 || spawn > (sqrt(sizeof(map)/4) - 1) || egg > (sqrt(sizeof(map)/4) - 1)) 		//check bounds for when map[i][j] is in a corner or edge, avoids segmentation error
+							{
+								continue;
+							}
+							else if(map[spawn][egg] == 0)
+							{
+								map[spawn][egg] = speciesCount;	//gives birth to offspring in nearest empty space
+								goto loopEnd;
 							}
 						}
 					}
-					
-					goto loopEnd;
 				}
 				else if(x.list[id-2][1] > x.list[(map[index][ind])-2][1])	//Better size wins out
 				{
@@ -181,12 +188,6 @@ int main()
 	std::cout << '\n';
 
 	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-	nextEpoch(one);
-
+	
 	return 0;
 }

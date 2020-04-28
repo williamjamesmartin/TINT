@@ -69,7 +69,7 @@ class Species
 
 				hunger = 10;
 
-				temp.push_back(count + 1);
+				temp.push_back(count);
 
 				temp.push_back(size);
 
