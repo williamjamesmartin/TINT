@@ -5,15 +5,16 @@
 #include <vector>
 #include "species.h"
 #include <algorithm>
+#include <fstream>
 
 int map[30][30];
 int speciesCount = 2;	//had to make this global to iniate species in the takeStep function
 
 bool checkMate(Species& x, int a, int b)		//returns True or False depending on whether or not species b is a potential mate
 {
-	int hungera = x.list[a-2][4];
+	double hungera = x.list[a-2][4];
 
-	int hungerb = x.list[b-2][4];
+	double hungerb = x.list[b-2][4];
 
 	if(abs(x.list[a-2][1] - x.list[b-2][1]) < x.list[a-2][1]*0.1 && hungera > 10 && hungerb > 10)		//within 10% of the original value
     {
@@ -54,10 +55,9 @@ void takeStep(Species& x, int id, int i, int j)		//determines actions based on v
 			{
 				if(checkMate(x,id,map[index][ind]))
 				{
-					speciesCount++;
 					x.initOffspring(speciesCount, id-2, map[index][ind]-2);
 					x.decHunger(id-2);
-					
+
 					for(int spawn = i - (int)ceil(v); spawn < i + (int)ceil(v); spawn++)
 					{
 						for(int egg = j - (int)ceil(v) - (int)ceil(v); egg < j + (int)ceil(v); egg++)
@@ -73,6 +73,7 @@ void takeStep(Species& x, int id, int i, int j)		//determines actions based on v
 							else if(map[spawn][egg] == 0)
 							{
 								map[spawn][egg] = speciesCount;	//gives birth to offspring in nearest empty space
+								speciesCount++;
 								goto loopEnd;
 							}
 						}
@@ -147,6 +148,8 @@ int main()
 	int speciesMax = 20;
 	int applier;
 	Species one;
+	std::vector<int> fileTester;
+	int fileCounter = 0;
 
 	one.initiateSpecies(speciesMax);
 
@@ -155,17 +158,17 @@ int main()
 	for (int i = 0; i < (sqrt(sizeof(map)/4)); i++)
 	{		
 		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
-			//initializes a 50 x 50 square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
+			//initializes a square map by setting random points of a resource or "food" denoted by a 1. All other points are empty as denoted by the number 0 
 		{	
 			applier = rand() % 100 + 1;					
 
-			if (applier >= 90)
+			if (applier >= 80)
 			{
 				map[i][j] = 1;
 			}
-			else if (applier >= 88 && applier < 90)
+			else if (applier >= 76 && applier < 80)
 			{
-				if (speciesCount < (2 + speciesMax))
+				if (speciesCount < (speciesMax + 2))
 				{
 					map[i][j] = speciesCount;
 
@@ -187,7 +190,49 @@ int main()
 
 	std::cout << '\n';
 
-	nextEpoch(one);
+	for (int i = 0; i < 20; i++)
+	{
+		nextEpoch(one);
+
+		one.printSpecies();
+
+		std::cout << speciesCount << std::endl;
+	}
+
+	std::ofstream myFile("output.csv", std::ios::app);
+
+	for (int i = 0; i < (sqrt(sizeof(map)/4)); i++)
+	{		
+		for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
+		{
+			if (map[i][j] >= 2)
+			{
+				myFile << one.list[map[i][j]-2][0] << "," << one.list[map[i][j]-2][1] << "," << one.list[map[i][j]-2][3] << "," << 1 << std::endl;
+
+				fileTester.push_back(map[i][j]-2);
+			}
+		}
+	}
 	
+	for (int i = 0; i < one.list.size(); i++)
+	{
+		for (int k = 0; k < fileTester.size(); k++)
+		{
+			if (i != fileTester[k])
+			{
+				fileCounter++;
+			}
+		}
+		
+		if (fileCounter == fileTester.size())
+		{
+			myFile << one.list[i][0] << "," << one.list[i][1] << "," << one.list[i][3] << "," << 0 << std::endl;
+		}
+
+		fileCounter = 0;
+	}
+
+	myFile.close();
+
 	return 0;
 }
