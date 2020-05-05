@@ -193,7 +193,20 @@ int main()
 	for (int i = 0; i < 20; i++)
 	{
 		nextEpoch(one);
+		
+		for (int k = 0; k < (sqrt(sizeof(map)/4)); k++)
+		{
+			for (int j = 0; j < (sqrt(sizeof(map)/4)); j++)
+			{
+				applier = rand() % 100 + 1;
 
+				if (applier > 95 && map[k][j] == 0)
+				{
+					map[k][j] = 1;
+				}		
+			}
+		}
+		
 		one.printSpecies();
 
 		std::cout << speciesCount << std::endl;
