@@ -61,11 +61,11 @@ class Species
 			
 			if(posTest > 0)
 			{
-				size = ((list[a][1] + list[b][1])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
+				size = ((list[a][1] + list[b][1])/2) + (((double) rand() / (RAND_MAX)) * 0.1);
 
-				speed = ((list[a][2] + list[b][2])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
+				speed = ((list[a][2] + list[b][2])/2) + (((double) rand() / (RAND_MAX)) * 0.1);
 
-				vision = ((list[a][3] + list[b][3])/2) * ((double) rand() / (RAND_MAX)) * 0.1;
+				vision = ((list[a][3] + list[b][3])/2) + (((double) rand() / (RAND_MAX)) * 0.1);
 
 				hunger = 10;
 
@@ -83,15 +83,15 @@ class Species
 			}
 			else
 			{
-				size = ((list[a][1] + list[b][1])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+				size = ((list[a][1] + list[b][1])/2) + (-((double) rand() / (RAND_MAX)) * 0.1);
 
-				speed = ((list[a][2] + list[b][2])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+				speed = ((list[a][2] + list[b][2])/2) + (-((double) rand() / (RAND_MAX)) * 0.1);
 
-				vision = ((list[a][3] + list[b][3])/2) * -((double) rand() / (RAND_MAX)) * 0.1;
+				vision = ((list[a][3] + list[b][3])/2) + (-((double) rand() / (RAND_MAX)) * 0.1);
 
 				hunger = 10;
 
-				temp.push_back(count + 1);
+				temp.push_back(count);
 
 				temp.push_back(size);
 
