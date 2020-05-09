@@ -1,4 +1,4 @@
-# TINT
+# TINT (TINT Is Not Tree-based)
  
  Dependencies: bash, g++ (any compiler post-version 11 should be fine), python3, numpy, pandas, keras, conda
 
